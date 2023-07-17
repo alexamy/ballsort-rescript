@@ -1,4 +1,4 @@
-%%raw("import './tailwind.css'")
+%%raw(`import './tailwind.css';`)
 
 ReactDOM.querySelector("#root")
 ->Option.getExn
