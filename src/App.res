@@ -12,20 +12,22 @@ let reducer = (state, action) => {
   }
 }
 
+let defaultState = {
+  moves: 0,
+  balls: [
+    [Blue, Blue, Blue, Blue],
+    [Red, Red, Red, Red],
+    [Green, Green, Green, Green],
+    [White, White, White, White],
+    [],
+    [],
+  ]
+}
+
 
 @react.component
 let make = () => {
-  let (state, dispatch) = React.useReducer(reducer, {
-    moves: 0,
-    balls: [
-      [Blue, Blue, Blue, Blue],
-      [Red, Red, Red, Red],
-      [Green, Green, Green, Green],
-      [White, White, White, White],
-      [],
-      [],
-    ]
-  })
+  let (state, dispatch) = React.useReducer(reducer, defaultState)
 
   <div className="App">
     {React.string("Hello")}
