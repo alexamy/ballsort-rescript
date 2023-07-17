@@ -1,11 +1,12 @@
+@@warning("-44")
 open Belt
 
 type color = Blue | Red | Green | White
-
+type tube = array<color>
 
 type state = {
   moves: int,
-  tubes: array<array<color>>,
+  tubes: array<tube>,
 }
 
 type action = Move
