@@ -2,42 +2,48 @@ open Belt
 
 type color = Blue | Red | Green | White
 
-type action = Randomize
+
 type state = {
   moves: int,
-  balls: array<array<color>>,
+  tubes: array<array<color>>,
 }
+
+type action = Move
 
 let reducer = (state, action) => {
   switch action {
-  | Randomize => {
-      ...state,
-      balls: state.balls->Array.map(Array.shuffle),
-    }
+  | Move => state
   }
 }
 
-let defaultState = {
-  moves: 0,
-  balls: [
-    [Blue, Blue, Blue, Blue],
-    [Red, Red, Red, Red],
-    [Green, Green, Green, Green],
-    [White, White, White, White],
-    [],
-    [],
-  ]
+
+let startBalls = [
+  Blue, Blue, Blue, Blue,
+  Red, Red, Red, Red,
+  Green, Green, Green, Green,
+  White, White, White, White
+]
+
+let init = (balls) => {
+  let balls = Array.shuffle(balls)
+
+  {
+    moves: 0,
+    tubes: [
+      balls->Array.slice(~offset=0, ~len=4),
+      balls->Array.slice(~offset=4, ~len=4),
+      balls->Array.slice(~offset=8, ~len=4),
+      balls->Array.slice(~offset=12, ~len=4),
+      [],
+      []
+    ],
+  }
 }
 
 
 @react.component
 let make = () => {
-  let (state, dispatch) = React.useReducer(reducer, defaultState)
-
-  React.useEffect0(() => {
-    dispatch(Randomize)
-    None
-  })
+  let (state, dispatch) = React.useReducerWithMapState(reducer, startBalls, init)
 
   Js.log(state)
 
