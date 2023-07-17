@@ -6,6 +6,19 @@ type state = {
   balls: array<array<color>>,
 }
 
+let shuffle = (array) => {
+  let result = []
+  let copy = Js.Array2.copy(array)
+
+  while Js.Array2.length(copy) > 0 {
+    let index = Js.Math.random_int(0, Js.Array2.length(copy))
+    let value = Js.Array2.spliceInPlace(copy, ~pos=index, ~remove=1)
+    Js.Array2.push(result, value)->ignore
+  }
+
+  result
+}
+
 let reducer = (state, action) => {
   switch action {
   | Randomize => state
