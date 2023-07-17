@@ -47,8 +47,6 @@ let init = (balls) => {
 let make = () => {
   let (state, dispatch) = React.useReducerWithMapState(reducer, startBalls, init)
 
-  Js.log(state)
-
   <div className="App">
     {React.string("Hello")}
   </div>
