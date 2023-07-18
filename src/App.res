@@ -62,9 +62,7 @@ let ballMake = (i, ball) => {
 module Tube = {
   @react.component
   let make = (~balls) => {
-    <div
-      className="flex flex-col w-8 justify-center align-bottom border-2"
-    >
+    <div className="flex flex-col w-8 justify-center align-bottom border-2">
       {balls->Array.mapWithIndex(ballMake)->React.array}
     </div>
   }
@@ -77,9 +75,7 @@ module Field = {
       <Tube key={Int.toString(i)} balls={tube} />
     })
 
-    <div
-      className="flex space-x-3"
-    >
+    <div className="flex space-x-3">
       {React.array(tubes)}
     </div>
   }
