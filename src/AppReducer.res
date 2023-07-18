@@ -11,7 +11,6 @@ let startBalls = [
   Violet, Violet, Violet, Violet
 ]
 
-
 let randomizeTubes = (colors) => {
   let colors = Array.shuffle(colors)
   [
@@ -24,10 +23,10 @@ let randomizeTubes = (colors) => {
   ]
 }
 
-type state<'a> = {
+type state= {
   moves: int,
   wins: int,
-  tubes: array<array<'a>>,
+  tubes: array<array<color>>,
   current: option<int>,
 }
 
@@ -55,10 +54,9 @@ let isWin = (tubes) => {
     switch Array.length(balls) {
     | 0 => true
     | 4 => {
-        balls[0]->Option.getExn ==
-        balls[1]->Option.getExn ==
-        balls[2]->Option.getExn ==
-        balls[3]->Option.getExn
+        let firstBall = balls[0]->Option.getExn
+        let onlyFirst = Js.Array2.filter(balls, v => v == firstBall)
+        Array.length(onlyFirst) == 4
       }
     | _ => false
     }
