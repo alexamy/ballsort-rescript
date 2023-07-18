@@ -89,15 +89,23 @@ let isEmpty = (tubes, index) => {
   Array.length(tube) == 0
 }
 
-let isSameTube = (source, target) => {
-  source == target
+let isRestrictedMove = (tubes, source, target) => {
+  let sourceBall = tubes[source]->Option.getExn->Array.get(0)
+  let targetBall = tubes[target]->Option.getExn->Array.get(0)
+
+  switch (sourceBall, targetBall) {
+  | (Some(b1), Some(b2)) if b1 != b2 => true
+  | (None, _) => true
+  | _ if source === target => true
+  | _ => false
+  }
 }
 
 let click = (state, target) => {
   switch state.current {
   | None if isEmpty(state.tubes, target) => state
   | None => { ...state, current: Some(target) }
-  | Some(source) if isSameTube(source, target) => state
+  | Some(source) if isRestrictedMove(state.tubes, source, target) => state
   | Some(source) => processClick(state, ~source, ~target)
   }
 }
