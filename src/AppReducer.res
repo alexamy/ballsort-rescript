@@ -101,7 +101,7 @@ let reducer = (state, action) => {
   }
 }
 
-let init = (_) => {
+let init = () => {
   {
     wins: 0,
     moves: 0,
