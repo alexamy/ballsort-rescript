@@ -11,7 +11,7 @@ type state = {
 }
 
 type action =
-| Move(int, int)
+| Click(int)
 
 let move = (tubes, ~source, ~target) => {
   Array.mapWithIndex(tubes, (i, tube) => {
@@ -31,10 +31,14 @@ let move = (tubes, ~source, ~target) => {
 
 let reducer = (state, action) => {
   switch action {
-  | Move(source, target) => {
-    ...state,
-    tubes: move(state.tubes, ~source, ~target)
-  }
+  | Click(tube) => {
+      moves: state.moves + 1,
+      current: Option.isSome(state.current) ? None : Some(tube),
+      tubes: switch state.current {
+        | Some(source) => move(state.tubes, ~source, ~target=tube)
+        | None => state.tubes
+      }
+    }
   }
 }
 
@@ -115,5 +119,9 @@ let make = () => {
 
   <div className="App">
     <Field tubes={state.tubes} />
+    <div>
+      {React.string("Moves: ")}
+      {React.int(state.moves)}
+    </div>
   </div>
 }
