@@ -51,37 +51,39 @@ let colorToHex = (color) => {
   }
 }
 
-@react.component
-let make = () => {
-  let (state, dispatch) = React.useReducerWithMapState(reducer, startBalls, init)
+let ballMake = (i, ball) => {
+  <div
+    key={Int.toString(i)}
+    style={{ background: colorToHex(ball) }}
+    className="w-6 h-6 box-border mb-1 shrink-0 rounded-full border-2 border-black"
+  />
+}
 
-  let ballMake = (i, ball) => {
-    <div
-      key={Int.toString(i)}
-      style={{ background: colorToHex(ball) }}
-      className="w-6 h-6 box-border mb-1 shrink-0 rounded-full border-2 border-black"
-    />
-  }
+let tubeMake = (i, balls) => {
+  <div
+    key={Int.toString(i)}
+    className="flex flex-col w-8 justify-center align-bottom border-2"
+  >
+    {balls->Array.mapWithIndex(ballMake)->React.array}
+  </div>
+}
 
-  let tubeMake = (i, balls) => {
-    <div
-      key={Int.toString(i)}
-      className="flex flex-col w-8 justify-center align-bottom border-2"
-    >
-      {balls->Array.mapWithIndex(ballMake)->React.array}
-    </div>
-  }
-  let fieldMake = tubes => {
+module Field = {
+  @react.component
+  let make = (~tubes) => {
     <div
       className="flex space-x-3"
     >
       {tubes->Array.mapWithIndex(tubeMake)->React.array}
     </div>
   }
+}
 
-  let field = fieldMake(state.tubes)
+@react.component
+let make = () => {
+  let (state, dispatch) = React.useReducerWithMapState(reducer, startBalls, init)
 
   <div className="App">
-    field
+    <Field tubes={state.tubes} />
   </div>
 }
