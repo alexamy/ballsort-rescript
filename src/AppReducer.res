@@ -111,15 +111,17 @@ let click = (state, target) => {
   }
 }
 
+let restart = (state) => {
+  wins: state.wins,
+  moves: 0,
+  current: None,
+  tubes: randomizeTubes(),
+}
+
 let reducer = (state, action) => {
   switch action {
   | Click(tube) => click(state, tube)
-  | Restart => {
-      wins: state.wins,
-      moves: 0,
-      current: None,
-      tubes: randomizeTubes(),
-    }
+  | Restart => restart(state)
   }
 }
 
