@@ -68,7 +68,7 @@ module Tube = {
       <Ball color key={Int.toString(i)} />
     })
 
-    <div className="flex flex-col w-8 justify-center align-bottom border-2">
+    <div className="flex flex-col w-6 align-bottom">
       {React.array(balls)}
     </div>
   }
@@ -81,7 +81,7 @@ module Field = {
       <Tube colors key={Int.toString(i)} />
     })
 
-    <div className="flex space-x-3">
+    <div className="flex items-end space-x-3 h-56">
       {React.array(tubes)}
     </div>
   }
