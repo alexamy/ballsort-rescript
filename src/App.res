@@ -59,19 +59,25 @@ let make = () => {
     <div
       key={Int.toString(i)}
       style={{ background: colorToHex(ball) }}
-      className="w-6 h-6 mb-1 rounded-full border-2 border-black"
+      className="w-6 h-6 box-border mb-1 shrink-0 rounded-full border-2 border-black"
     />
   }
 
   let tubeMake = (i, balls) => {
     <div
       key={Int.toString(i)}
-      className="flex space-x-2"
+      className="flex flex-col w-8 justify-center align-bottom border-2"
     >
       {balls->Array.mapWithIndex(ballMake)->React.array}
     </div>
   }
-  let fieldMake = tubes => tubes->Array.mapWithIndex(tubeMake)->React.array
+  let fieldMake = tubes => {
+    <div
+      className="flex space-x-3"
+    >
+      {tubes->Array.mapWithIndex(tubeMake)->React.array}
+    </div>
+  }
 
   let field = fieldMake(state.tubes)
 
