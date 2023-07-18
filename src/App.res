@@ -9,11 +9,27 @@ type state = {
   tubes: array<tube>,
 }
 
-type action = Move
+type action =
+| Move(int, int)
 
 let reducer = (state, action) => {
   switch action {
-  | Move => state
+  | Move(source, target) => {
+    ...state,
+    tubes: Array.mapWithIndex(state.tubes, (i, tube) => {
+      if i === source {
+        Array.sliceToEnd(tube, 1)
+      } else if i === target {
+        let tube = state.tubes[source]->Option.getExn
+        switch tube[0] {
+        | Some(ball) => Array.concat([ball], tube)
+        | None => tube
+        }
+      } else {
+        tube
+      }
+    })
+  }
   }
 }
 
@@ -63,7 +79,7 @@ module Ball = {
 
 module Tube = {
   @react.component
-  let make = (~colors) => {
+  let make = (~colors, ~index) => {
     let balls = Array.mapWithIndex(colors, (i, color) => {
       <Ball color key={Int.toString(i)} />
     })
@@ -77,8 +93,8 @@ module Tube = {
 module Field = {
   @react.component
   let make = (~tubes) => {
-    let tubes = Array.mapWithIndex(tubes, (i, colors) => {
-      <Tube colors key={Int.toString(i)} />
+    let tubes = Array.mapWithIndex(tubes, (index, colors) => {
+      <Tube colors index key={Int.toString(index)} />
     })
 
     <div className="flex items-end space-x-3 h-56">
