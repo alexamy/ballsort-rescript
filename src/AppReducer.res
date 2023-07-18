@@ -67,11 +67,19 @@ let processClick = (state, ~source, ~target) => {
   let tubes = move(state.tubes, ~source, ~target)
   let isWin = isWin(tubes)
 
-  {
-    tubes: isWin ? randomizeTubes(startBalls) : tubes,
-    wins: state.wins + (isWin ? 1 : 0),
-    moves: state.moves + 1,
-    current: None,
+  switch isWin {
+  | true => {
+      tubes: randomizeTubes(startBalls),
+      wins: state.wins + 1,
+      moves: 0,
+      current: None,
+    }
+  | false => {
+      tubes: state.tubes,
+      wins: state.wins,
+      moves: state.moves + 1,
+      current: None,
+    }
   }
 }
 
