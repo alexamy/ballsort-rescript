@@ -54,12 +54,13 @@ let isWin = (tubes) => {
   Array.every(tubes, (balls) => {
     switch Array.length(balls) {
     | 0 => true
-    | length => {
+    | 4 => {
         let firstBall = balls[0]->Option.getExn
         let onlyFirst = Js.Array2.filter(balls, v => v == firstBall)
 
-        length == Array.length(onlyFirst)
+        Array.length(onlyFirst) == 4
       }
+    | _ => false
     }
   })
 }
