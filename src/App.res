@@ -64,12 +64,12 @@ module Ball = {
 module Tube = {
   @react.component
   let make = (~colors) => {
-    let colors = Array.mapWithIndex(colors, (i, color) => {
+    let balls = Array.mapWithIndex(colors, (i, color) => {
       <Ball color key={Int.toString(i)} />
     })
 
     <div className="flex flex-col w-8 justify-center align-bottom border-2">
-      {React.array(colors)}
+      {React.array(balls)}
     </div>
   }
 }
