@@ -2,11 +2,9 @@
 @@warning("-44")
 open Belt
 
-type tube<'a> = array<'a>
-
 type state<'a> = {
   moves: int,
-  tubes: array<tube<'a>>,
+  tubes: array<array<'a>>,
   current: option<int>,
 }
 
