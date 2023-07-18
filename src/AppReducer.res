@@ -84,12 +84,14 @@ let processClick = (state, ~source, ~target) => {
   }
 }
 
-let click = (state, target) => {
-  let targetTube = state.tubes->Array.get(target)->Option.getExn
-  let isEmpty = Array.length(targetTube) == 0
+let isEmpty = (tubes, index) => {
+  let tube = tubes->Array.get(index)->Option.getExn
+  Array.length(tube) == 0
+}
 
+let click = (state, target) => {
   switch state.current {
-  | None if isEmpty => state
+  | None if isEmpty(state.tubes, target) => state
   | None => { ...state, current: Some(target) }
   | Some(source) if source == target => state
   | Some(source) => processClick(state, ~source, ~target)
