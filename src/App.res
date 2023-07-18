@@ -25,13 +25,13 @@ let startBalls = [
   Violet, Violet, Violet, Violet
 ]
 
-let init = (balls) => {
-  let balls = Array.shuffle(balls)
+let init = (colors) => {
+  let colors = Array.shuffle(colors)
   let tubes = [
-    Array.slice(balls, ~offset=0, ~len=4),
-    Array.slice(balls, ~offset=4, ~len=4),
-    Array.slice(balls, ~offset=8, ~len=4),
-    Array.slice(balls, ~offset=12, ~len=4),
+    Array.slice(colors, ~offset=0, ~len=4),
+    Array.slice(colors, ~offset=4, ~len=4),
+    Array.slice(colors, ~offset=8, ~len=4),
+    Array.slice(colors, ~offset=12, ~len=4),
     [],
     []
   ]
@@ -63,13 +63,13 @@ module Ball = {
 
 module Tube = {
   @react.component
-  let make = (~balls) => {
-    let balls = Array.mapWithIndex(balls, (i, color) => {
+  let make = (~colors) => {
+    let colors = Array.mapWithIndex(colors, (i, color) => {
       <Ball color key={Int.toString(i)} />
     })
 
     <div className="flex flex-col w-8 justify-center align-bottom border-2">
-      {React.array(balls)}
+      {React.array(colors)}
     </div>
   }
 }
@@ -77,8 +77,8 @@ module Tube = {
 module Field = {
   @react.component
   let make = (~tubes) => {
-    let tubes = Array.mapWithIndex(tubes, (i, balls) => {
-      <Tube balls key={Int.toString(i)} />
+    let tubes = Array.mapWithIndex(tubes, (i, colors) => {
+      <Tube colors key={Int.toString(i)} />
     })
 
     <div className="flex space-x-3">
