@@ -51,19 +51,25 @@ let colorToHex = (color) => {
   }
 }
 
-let ballMake = (i, ball) => {
-  <div
-    key={Int.toString(i)}
-    style={{ background: colorToHex(ball) }}
-    className="w-6 h-6 box-border mb-1 shrink-0 rounded-full border-2 border-black"
-  />
+module Ball = {
+  @react.component
+  let make = (~color) => {
+    <div
+      style={{ background: colorToHex(color) }}
+      className="w-6 h-6 box-border mb-1 shrink-0 rounded-full border-2 border-black"
+    />
+  }
 }
 
 module Tube = {
   @react.component
   let make = (~balls) => {
+    let balls = Array.mapWithIndex(balls, (i, color) => {
+      <Ball key={Int.toString(i)} color={color} />
+    })
+
     <div className="flex flex-col w-8 justify-center align-bottom border-2">
-      {balls->Array.mapWithIndex(ballMake)->React.array}
+      {React.array(balls)}
     </div>
   }
 }
