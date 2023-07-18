@@ -30,19 +30,13 @@ let move = (tubes, ~source, ~target) => {
 }
 
 let click = (state, tube) => {
-  {
-    moves: state.moves + 1,
-    current: {
-      switch state.current {
-      | Some(prevTube) => tube == prevTube ? Some(prevTube) : None
-      | None => Some(tube)
-      }
-    },
-    tubes: {
-      switch state.current {
-      | Some(source) => move(state.tubes, ~source, ~target=tube)
-      | None => state.tubes
-      }
+  switch state.current {
+  | None => { ...state, current: Some(tube) }
+  | Some(source) if source == tube => state
+  | Some(source) => {
+      moves: state.moves + 1,
+      tubes: move(state.tubes, ~source, ~target=tube),
+      current: None
     }
   }
 }
