@@ -28,6 +28,20 @@ let move = (tubes, ~source, ~target) => {
   })
 }
 
+let isWin = (tubes) => {
+  Array.every(tubes, (balls) => {
+    switch Array.length(balls) {
+    | 0 => true
+    | length => {
+        let firstBall = balls[0]->Option.getExn
+        let onlyFirst = Js.Array2.filter(balls, v => v == firstBall)
+
+        length == Array.length(onlyFirst)
+      }
+    }
+  })
+}
+
 let click = (state, target) => {
   let targetTube = state.tubes->Array.get(target)->Option.getExn
   let isEmpty = Array.length(targetTube) == 0
@@ -37,10 +51,15 @@ let click = (state, target) => {
   | None => { ...state, current: Some(target) }
   | Some(source) if source == target => state
   | Some(source) => {
-      wins: 0,
-      moves: state.moves + 1,
-      tubes: move(state.tubes, ~source, ~target),
-      current: None,
+      let tubes = move(state.tubes, ~source, ~target)
+      let isWin = isWin(tubes)
+
+      {
+        tubes: isWin ? tubes : tubes,
+        wins: state.wins + (isWin ? 1 : 0),
+        moves: state.moves + 1,
+        current: None,
+      }
     }
   }
 }
