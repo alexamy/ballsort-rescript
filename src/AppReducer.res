@@ -2,6 +2,8 @@
 @@warning("-44")
 open Belt
 
+type color = Blue | Red | Green | Violet
+
 type state<'a> = {
   moves: int,
   wins: int,
@@ -81,6 +83,13 @@ let randomizeTubes = (colors) => {
     []
   ]
 }
+
+let startBalls = [
+  Blue, Blue, Blue, Blue,
+  Red, Red, Red, Red,
+  Green, Green, Green, Green,
+  Violet, Violet, Violet, Violet
+]
 
 let init = (colors) => {
   {

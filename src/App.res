@@ -1,16 +1,7 @@
 @@warning("-44")
 open Belt
 
-type color = Blue | Red | Green | Violet
-
-let startBalls = [
-  Blue, Blue, Blue, Blue,
-  Red, Red, Red, Red,
-  Green, Green, Green, Green,
-  Violet, Violet, Violet, Violet
-]
-
-let colorToHex = (color) => {
+let colorToHex = (color: AppReducer.color) => {
   switch color {
   | Blue => "#0097e6"
   | Red => "#c23616"
@@ -66,7 +57,7 @@ module Field = {
 let make = () => {
   let (state, dispatch) = React.useReducerWithMapState(
     AppReducer.reducer,
-    startBalls,
+    AppReducer.startBalls,
     AppReducer.init,
   )
 
