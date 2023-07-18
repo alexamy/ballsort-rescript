@@ -90,6 +90,10 @@ let isEmpty = (tubes, index) => {
   Array.length(tube) == 0
 }
 
+let isSame = (source, target) => {
+  source == target
+}
+
 let isRestrictedMove = (tubes, source, target) => {
   let sourceBall = tubes[source]->Option.getExn->Array.get(0)
   let targetBall = tubes[target]->Option.getExn->Array.get(0)
@@ -106,6 +110,7 @@ let click = (state, target) => {
   switch state.current {
   | None if isEmpty(state.tubes, target) => state
   | None => { ...state, current: Some(target) }
+  | Some(source) if isSame(source, target) => { ...state, current: None }
   | Some(source) if isRestrictedMove(state.tubes, source, target) => state
   | Some(source) => processClick(state, ~source, ~target)
   }
