@@ -56,15 +56,22 @@ let make = () => {
   let (state, dispatch) = React.useReducerWithMapState(reducer, startBalls, init)
 
   let ballMake = (i, ball) => {
-    let color = colorToHex(ball)
-
-    <div key={Int.toString(i)} style={{ color: color }}>
-      {React.string(color)}
-    </div>
+    <div
+      key={Int.toString(i)}
+      style={{ background: colorToHex(ball) }}
+      className="w-6 h-6 mb-1 rounded-full border-2 border-black"
+    />
   }
 
-  let tubeMake = balls => balls->Array.mapWithIndex(ballMake)->React.array
-  let fieldMake = tubes => tubes->Array.map(tubeMake)->React.array
+  let tubeMake = (i, balls) => {
+    <div
+      key={Int.toString(i)}
+      className="flex space-x-2"
+    >
+      {balls->Array.mapWithIndex(ballMake)->React.array}
+    </div>
+  }
+  let fieldMake = tubes => tubes->Array.mapWithIndex(tubeMake)->React.array
 
   let field = fieldMake(state.tubes)
 
