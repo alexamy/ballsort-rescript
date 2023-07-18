@@ -22,14 +22,16 @@ module Ball = {
 
 module Tube = {
   @react.component
-  let make = (~colors, ~onClick) => {
+  let make = (~colors, ~active, ~onClick) => {
     let balls = Array.mapWithIndex(colors, (i, color) => {
       <Ball color key={Int.toString(i)} />
     })
 
+    let border = active ? "border-gray-300" : "border-gray-600"
+
     <div
       onClick
-      className="flex flex-col items-center justify-end px-4 w-6 min-h-56 h-56 border-gray-600 border-2 cursor-pointer"
+      className=`flex flex-col items-center justify-end px-4 w-6 min-h-56 h-56 border-2 cursor-pointer ${border}`
     >
       {React.array(balls)}
     </div>
@@ -42,6 +44,7 @@ module Field = {
     let tubes = Array.mapWithIndex(tubes, (index, colors) => {
       <Tube
         colors
+        active={Option.mapWithDefault(current, false, i => i == index)}
         onClick={(_) => dispatch(AppReducer.Click(index))}
         key={Int.toString(index)}
       />
