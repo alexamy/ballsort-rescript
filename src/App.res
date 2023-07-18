@@ -36,7 +36,7 @@ module Tube = {
       <Ball color key={Int.toString(i)} />
     })
 
-    <div onClick className="flex flex-col w-6 align-bottom">
+    <div onClick className="flex flex-col justify-end w-6 min-h-56 h-56 align-bottom">
       {React.array(balls)}
     </div>
   }
@@ -53,7 +53,7 @@ module Field = {
       />
     })
 
-    <div className="flex items-end space-x-3 h-56">
+    <div className="flex items-end space-x-3">
       {React.array(tubes)}
     </div>
   }

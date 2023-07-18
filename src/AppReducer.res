@@ -27,14 +27,18 @@ let move = (tubes, ~source, ~target) => {
   })
 }
 
-let click = (state, tube) => {
+let click = (state, target) => {
+  let targetTube = state.tubes->Array.get(target)->Option.getExn
+  let isEmpty = Array.length(targetTube) == 0
+
   switch state.current {
-  | None => { ...state, current: Some(tube) }
-  | Some(source) if source == tube => state
+  | None if isEmpty => state
+  | None => { ...state, current: Some(target) }
+  | Some(source) if source == target => state
   | Some(source) => {
       current: None,
       moves: state.moves + 1,
-      tubes: move(state.tubes, ~source, ~target=tube),
+      tubes: move(state.tubes, ~source, ~target),
     }
   }
 }
