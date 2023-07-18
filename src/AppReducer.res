@@ -70,9 +70,9 @@ let reducer = (state, action) => {
   }
 }
 
-let init = (colors) => {
+let randomizeTubes = (colors) => {
   let colors = Array.shuffle(colors)
-  let tubes = [
+  [
     Array.slice(colors, ~offset=0, ~len=4),
     Array.slice(colors, ~offset=4, ~len=4),
     Array.slice(colors, ~offset=8, ~len=4),
@@ -80,11 +80,13 @@ let init = (colors) => {
     [],
     []
   ]
+}
 
+let init = (colors) => {
   {
-    tubes,
     wins: 0,
     moves: 0,
     current: None,
+    tubes: randomizeTubes(colors),
   }
 }
