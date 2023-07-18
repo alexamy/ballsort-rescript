@@ -29,16 +29,27 @@ let move = (tubes, ~source, ~target) => {
   })
 }
 
-let reducer = (state, action) => {
-  switch action {
-  | Click(tube) => {
-      moves: state.moves + 1,
-      current: Option.isSome(state.current) ? None : Some(tube),
-      tubes: switch state.current {
-        | Some(source) => move(state.tubes, ~source, ~target=tube)
-        | None => state.tubes
+let click = (state, tube) => {
+  {
+    moves: state.moves + 1,
+    current: {
+      switch state.current {
+      | Some(prevTube) => tube == prevTube ? Some(prevTube) : None
+      | None => Some(tube)
+      }
+    },
+    tubes: {
+      switch state.current {
+      | Some(source) => move(state.tubes, ~source, ~target=tube)
+      | None => state.tubes
       }
     }
+  }
+}
+
+let reducer = (state, action) => {
+  switch action {
+  | Click(tube) => click(state, tube)
   }
 }
 
