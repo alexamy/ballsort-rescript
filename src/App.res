@@ -59,22 +59,28 @@ let ballMake = (i, ball) => {
   />
 }
 
-let tubeMake = (i, balls) => {
-  <div
-    key={Int.toString(i)}
-    className="flex flex-col w-8 justify-center align-bottom border-2"
-  >
-    {balls->Array.mapWithIndex(ballMake)->React.array}
-  </div>
+module Tube = {
+  @react.component
+  let make = (~balls) => {
+    <div
+      className="flex flex-col w-8 justify-center align-bottom border-2"
+    >
+      {balls->Array.mapWithIndex(ballMake)->React.array}
+    </div>
+  }
 }
 
 module Field = {
   @react.component
   let make = (~tubes) => {
+    let tubes = Array.mapWithIndex(tubes, (i, tube) => {
+      <Tube key={Int.toString(i)} balls={tube} />
+    })
+
     <div
       className="flex space-x-3"
     >
-      {tubes->Array.mapWithIndex(tubeMake)->React.array}
+      {React.array(tubes)}
     </div>
   }
 }
