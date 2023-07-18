@@ -1,7 +1,7 @@
 @@warning("-44")
 open Belt
 
-type color = Blue | Red | Green | White
+type color = Blue | Red | Green | Violet
 type tube = array<color>
 
 type state = {
@@ -22,7 +22,7 @@ let startBalls = [
   Blue, Blue, Blue, Blue,
   Red, Red, Red, Red,
   Green, Green, Green, Green,
-  White, White, White, White
+  Violet, Violet, Violet, Violet
 ]
 
 let init = (balls) => {
@@ -42,12 +42,12 @@ let init = (balls) => {
   }
 }
 
-let colorToString = (color) => {
+let colorToHex = (color) => {
   switch color {
-  | Blue => "blue"
-  | Red => "red"
-  | Green => "green"
-  | White => "white"
+  | Blue => "#0097e6"
+  | Red => "#c23616"
+  | Green => "#44bd32"
+  | Violet => "#8c7ae6"
   }
 }
 
@@ -56,8 +56,10 @@ let make = () => {
   let (state, dispatch) = React.useReducerWithMapState(reducer, startBalls, init)
 
   let ballMake = (i, ball) => {
-    <div key={Int.toString(i)}>
-      {ball->colorToString->React.string}
+    let color = colorToHex(ball)
+
+    <div key={Int.toString(i)} style={{ color: color }}>
+      {React.string(color)}
     </div>
   }
 
