@@ -7,28 +7,33 @@ type tube = array<color>
 type state = {
   moves: int,
   tubes: array<tube>,
+  current: option<int>,
 }
 
 type action =
 | Move(int, int)
 
+let move = (tubes, ~source, ~target) => {
+  Array.mapWithIndex(tubes, (i, tube) => {
+    if i === source {
+      Array.sliceToEnd(tube, 1)
+    } else if i === target {
+      let top = tubes[source]->Option.getExn->Array.get(0)
+      switch top {
+      | Some(ball) => Array.concat([ball], tube)
+      | None => tube
+      }
+    } else {
+      tube
+    }
+  })
+}
+
 let reducer = (state, action) => {
   switch action {
   | Move(source, target) => {
     ...state,
-    tubes: Array.mapWithIndex(state.tubes, (i, tube) => {
-      if i === source {
-        Array.sliceToEnd(tube, 1)
-      } else if i === target {
-        let tube = state.tubes[source]->Option.getExn
-        switch tube[0] {
-        | Some(ball) => Array.concat([ball], tube)
-        | None => tube
-        }
-      } else {
-        tube
-      }
-    })
+    tubes: move(state.tubes, ~source, ~target)
   }
   }
 }
@@ -54,6 +59,7 @@ let init = (colors) => {
 
   {
     moves: 0,
+    current: None,
     tubes,
   }
 }
