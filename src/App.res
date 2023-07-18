@@ -28,10 +28,10 @@ let startBalls = [
 let init = (balls) => {
   let balls = Array.shuffle(balls)
   let tubes = [
-    balls->Array.slice(~offset=0, ~len=4),
-    balls->Array.slice(~offset=4, ~len=4),
-    balls->Array.slice(~offset=8, ~len=4),
-    balls->Array.slice(~offset=12, ~len=4),
+    Array.slice(balls, ~offset=0, ~len=4),
+    Array.slice(balls, ~offset=4, ~len=4),
+    Array.slice(balls, ~offset=8, ~len=4),
+    Array.slice(balls, ~offset=12, ~len=4),
     [],
     []
   ]
