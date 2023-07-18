@@ -4,6 +4,26 @@ open Belt
 
 type color = Blue | Red | Green | Violet
 
+let startBalls = [
+  Blue, Blue, Blue, Blue,
+  Red, Red, Red, Red,
+  Green, Green, Green, Green,
+  Violet, Violet, Violet, Violet
+]
+
+
+let randomizeTubes = (colors) => {
+  let colors = Array.shuffle(colors)
+  [
+    Array.slice(colors, ~offset=0, ~len=4),
+    Array.slice(colors, ~offset=4, ~len=4),
+    Array.slice(colors, ~offset=8, ~len=4),
+    Array.slice(colors, ~offset=12, ~len=4),
+    [],
+    []
+  ]
+}
+
 type state<'a> = {
   moves: int,
   wins: int,
@@ -57,7 +77,7 @@ let click = (state, target) => {
       let isWin = isWin(tubes)
 
       {
-        tubes: isWin ? tubes : tubes,
+        tubes: isWin ? randomizeTubes(startBalls) : tubes,
         wins: state.wins + (isWin ? 1 : 0),
         moves: state.moves + 1,
         current: None,
@@ -71,25 +91,6 @@ let reducer = (state, action) => {
   | Click(tube) => click(state, tube)
   }
 }
-
-let randomizeTubes = (colors) => {
-  let colors = Array.shuffle(colors)
-  [
-    Array.slice(colors, ~offset=0, ~len=4),
-    Array.slice(colors, ~offset=4, ~len=4),
-    Array.slice(colors, ~offset=8, ~len=4),
-    Array.slice(colors, ~offset=12, ~len=4),
-    [],
-    []
-  ]
-}
-
-let startBalls = [
-  Blue, Blue, Blue, Blue,
-  Red, Red, Red, Red,
-  Green, Green, Green, Green,
-  Violet, Violet, Violet, Violet
-]
 
 let init = (colors) => {
   {
