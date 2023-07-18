@@ -89,11 +89,15 @@ let isEmpty = (tubes, index) => {
   Array.length(tube) == 0
 }
 
+let isSameTube = (source, target) => {
+  source == target
+}
+
 let click = (state, target) => {
   switch state.current {
   | None if isEmpty(state.tubes, target) => state
   | None => { ...state, current: Some(target) }
-  | Some(source) if source == target => state
+  | Some(source) if isSameTube(source, target) => state
   | Some(source) => processClick(state, ~source, ~target)
   }
 }
