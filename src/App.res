@@ -38,7 +38,7 @@ module Tube = {
 
 module Field = {
   @react.component
-  let make = (~tubes, ~dispatch) => {
+  let make = (~tubes, ~current, ~dispatch) => {
     let tubes = Array.mapWithIndex(tubes, (index, colors) => {
       <Tube
         colors
@@ -61,15 +61,17 @@ let make = () => {
     AppReducer.init,
   )
 
+  let { current, tubes, moves, wins } = state
+
   <div className="App">
-    <Field dispatch tubes={state.tubes} />
+    <Field dispatch current tubes />
     <div>
       {React.string("Moves: ")}
-      {React.int(state.moves)}
+      {React.int(moves)}
     </div>
     <div>
       {React.string("Wins: ")}
-      {React.int(state.wins)}
+      {React.int(wins)}
     </div>
   </div>
 }
