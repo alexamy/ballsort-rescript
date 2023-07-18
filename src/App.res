@@ -38,7 +38,7 @@ module Tube = {
 
     <div
       onClick
-      className="flex flex-col justify-end w-6 min-h-56 h-56 align-bottom cursor-pointer"
+      className="flex flex-col items-center justify-end px-4 w-6 min-h-56 h-56 border-gray-600 border-2 cursor-pointer"
     >
       {React.array(balls)}
     </div>
