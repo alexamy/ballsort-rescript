@@ -51,13 +51,17 @@ let colorToString = (color) => {
   }
 }
 
-
 @react.component
 let make = () => {
   let (state, dispatch) = React.useReducerWithMapState(reducer, startBalls, init)
 
-  let ballMake = ball => <div>{ball->colorToString->React.string}</div>
-  let tubeMake = balls => balls->Array.map(ballMake)->React.array
+  let ballMake = (i, ball) => {
+    <div key={Int.toString(i)}>
+      {ball->colorToString->React.string}
+    </div>
+  }
+
+  let tubeMake = balls => balls->Array.mapWithIndex(ballMake)->React.array
   let fieldMake = tubes => tubes->Array.map(tubeMake)->React.array
 
   let field = fieldMake(state.tubes)
