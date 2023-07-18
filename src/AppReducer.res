@@ -75,7 +75,7 @@ let processClick = (state, ~source, ~target) => {
       current: None,
     }
   | false => {
-      tubes: state.tubes,
+      tubes: tubes,
       wins: state.wins,
       moves: state.moves + 1,
       current: None,
