@@ -11,8 +11,8 @@ let startBalls = [
   Violet, Violet, Violet, Violet
 ]
 
-let randomizeTubes = (colors) => {
-  let colors = Array.shuffle(colors)
+let randomizeTubes = () => {
+  let colors = Array.shuffle(startBalls)
   [
     Array.slice(colors, ~offset=0, ~len=4),
     Array.slice(colors, ~offset=4, ~len=4),
@@ -69,7 +69,7 @@ let processClick = (state, ~source, ~target) => {
 
   switch isWin {
   | true => {
-      tubes: randomizeTubes(startBalls),
+      tubes: randomizeTubes(),
       wins: state.wins + 1,
       moves: 0,
       current: None,
@@ -101,11 +101,11 @@ let reducer = (state, action) => {
   }
 }
 
-let init = (colors) => {
+let init = (_) => {
   {
     wins: 0,
     moves: 0,
     current: None,
-    tubes: randomizeTubes(colors),
+    tubes: randomizeTubes(),
   }
 }

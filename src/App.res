@@ -57,7 +57,7 @@ module Field = {
 let make = () => {
   let (state, dispatch) = React.useReducerWithMapState(
     AppReducer.reducer,
-    AppReducer.startBalls,
+    None,
     AppReducer.init,
   )
 
