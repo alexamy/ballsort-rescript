@@ -4,6 +4,7 @@ open Belt
 
 type state<'a> = {
   moves: int,
+  wins: int,
   tubes: array<array<'a>>,
   current: option<int>,
 }
@@ -36,6 +37,7 @@ let click = (state, target) => {
   | None => { ...state, current: Some(target) }
   | Some(source) if source == target => state
   | Some(source) => {
+      wins: 0,
       moves: state.moves + 1,
       tubes: move(state.tubes, ~source, ~target),
       current: None,
@@ -62,6 +64,7 @@ let init = (colors) => {
 
   {
     tubes,
+    wins: 0,
     moves: 0,
     current: None,
   }

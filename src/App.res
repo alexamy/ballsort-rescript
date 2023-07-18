@@ -76,5 +76,9 @@ let make = () => {
       {React.string("Moves: ")}
       {React.int(state.moves)}
     </div>
+    <div>
+      {React.string("Wins: ")}
+      {React.int(state.wins)}
+    </div>
   </div>
 }
