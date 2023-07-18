@@ -32,9 +32,9 @@ let click = (state, tube) => {
   | None => { ...state, current: Some(tube) }
   | Some(source) if source == tube => state
   | Some(source) => {
+      current: None,
       moves: state.moves + 1,
       tubes: move(state.tubes, ~source, ~target=tube),
-      current: None
     }
   }
 }
