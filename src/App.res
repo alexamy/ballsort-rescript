@@ -2,51 +2,6 @@
 open Belt
 
 type color = Blue | Red | Green | Violet
-type tube = array<color>
-
-type state = {
-  moves: int,
-  tubes: array<tube>,
-  current: option<int>,
-}
-
-type action =
-| Click(int)
-
-let move = (tubes, ~source, ~target) => {
-  Array.mapWithIndex(tubes, (i, tube) => {
-    if i === source {
-      Array.sliceToEnd(tube, 1)
-    } else if i === target {
-      let top = tubes[source]->Option.getExn->Array.get(0)
-      switch top {
-      | Some(ball) => Array.concat([ball], tube)
-      | None => tube
-      }
-    } else {
-      tube
-    }
-  })
-}
-
-let click = (state, tube) => {
-  switch state.current {
-  | None => { ...state, current: Some(tube) }
-  | Some(source) if source == tube => state
-  | Some(source) => {
-      moves: state.moves + 1,
-      tubes: move(state.tubes, ~source, ~target=tube),
-      current: None
-    }
-  }
-}
-
-let reducer = (state, action) => {
-  switch action {
-  | Click(tube) => click(state, tube)
-  }
-}
-
 
 let startBalls = [
   Blue, Blue, Blue, Blue,
@@ -54,24 +9,6 @@ let startBalls = [
   Green, Green, Green, Green,
   Violet, Violet, Violet, Violet
 ]
-
-let init = (colors) => {
-  let colors = Array.shuffle(colors)
-  let tubes = [
-    Array.slice(colors, ~offset=0, ~len=4),
-    Array.slice(colors, ~offset=4, ~len=4),
-    Array.slice(colors, ~offset=8, ~len=4),
-    Array.slice(colors, ~offset=12, ~len=4),
-    [],
-    []
-  ]
-
-  {
-    moves: 0,
-    current: None,
-    tubes,
-  }
-}
 
 let colorToHex = (color) => {
   switch color {
@@ -111,7 +48,7 @@ module Field = {
     let tubes = Array.mapWithIndex(tubes, (index, colors) => {
       <Tube
         colors
-        onClick={(_) => dispatch(Click(index))}
+        onClick={(_) => dispatch(AppReducer.Click(index))}
         key={Int.toString(index)}
       />
     })
@@ -124,7 +61,11 @@ module Field = {
 
 @react.component
 let make = () => {
-  let (state, dispatch) = React.useReducerWithMapState(reducer, startBalls, init)
+  let (state, dispatch) = React.useReducerWithMapState(
+    AppReducer.reducer,
+    startBalls,
+    AppReducer.init,
+  )
 
   <div className="App">
     <Field dispatch tubes={state.tubes} />
