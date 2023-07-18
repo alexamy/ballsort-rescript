@@ -63,6 +63,18 @@ let isWin = (tubes) => {
   })
 }
 
+let processClick = (state, ~source, ~target) => {
+  let tubes = move(state.tubes, ~source, ~target)
+  let isWin = isWin(tubes)
+
+  {
+    tubes: isWin ? randomizeTubes(startBalls) : tubes,
+    wins: state.wins + (isWin ? 1 : 0),
+    moves: state.moves + 1,
+    current: None,
+  }
+}
+
 let click = (state, target) => {
   let targetTube = state.tubes->Array.get(target)->Option.getExn
   let isEmpty = Array.length(targetTube) == 0
@@ -71,17 +83,7 @@ let click = (state, target) => {
   | None if isEmpty => state
   | None => { ...state, current: Some(target) }
   | Some(source) if source == target => state
-  | Some(source) => {
-      let tubes = move(state.tubes, ~source, ~target)
-      let isWin = isWin(tubes)
-
-      {
-        tubes: isWin ? randomizeTubes(startBalls) : tubes,
-        wins: state.wins + (isWin ? 1 : 0),
-        moves: state.moves + 1,
-        current: None,
-      }
-    }
+  | Some(source) => processClick(state, ~source, ~target)
   }
 }
 
