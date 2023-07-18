@@ -89,12 +89,12 @@ module Ball = {
 
 module Tube = {
   @react.component
-  let make = (~colors, ~index) => {
+  let make = (~colors, ~onClick) => {
     let balls = Array.mapWithIndex(colors, (i, color) => {
       <Ball color key={Int.toString(i)} />
     })
 
-    <div className="flex flex-col w-6 align-bottom">
+    <div onClick className="flex flex-col w-6 align-bottom">
       {React.array(balls)}
     </div>
   }
@@ -102,9 +102,13 @@ module Tube = {
 
 module Field = {
   @react.component
-  let make = (~tubes) => {
+  let make = (~tubes, ~dispatch) => {
     let tubes = Array.mapWithIndex(tubes, (index, colors) => {
-      <Tube colors index key={Int.toString(index)} />
+      <Tube
+        colors
+        onClick={(_) => dispatch(Click(index))}
+        key={Int.toString(index)}
+      />
     })
 
     <div className="flex items-end space-x-3 h-56">
@@ -118,7 +122,7 @@ let make = () => {
   let (state, dispatch) = React.useReducerWithMapState(reducer, startBalls, init)
 
   <div className="App">
-    <Field tubes={state.tubes} />
+    <Field dispatch tubes={state.tubes} />
     <div>
       {React.string("Moves: ")}
       {React.int(state.moves)}
