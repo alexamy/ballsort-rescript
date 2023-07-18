@@ -32,6 +32,7 @@ type state= {
 
 type action =
 | Click(int)
+| Restart
 
 let move = (tubes, ~source, ~target) => {
   Array.mapWithIndex(tubes, (i, tube) => {
@@ -113,6 +114,12 @@ let click = (state, target) => {
 let reducer = (state, action) => {
   switch action {
   | Click(tube) => click(state, tube)
+  | Restart => {
+      wins: state.wins,
+      moves: 0,
+      current: None,
+      tubes: randomizeTubes(),
+    }
   }
 }
 

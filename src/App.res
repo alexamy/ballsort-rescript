@@ -76,5 +76,11 @@ let make = () => {
       {React.string("Wins: ")}
       {React.int(wins)}
     </div>
+    <button
+      onClick={(_) => dispatch(AppReducer.Restart)}
+      className="p-1 rounded text-black bg-slate-200 hover:bg-slate-300 active:bg-slate-400"
+    >
+      {React.string("Restart")}
+    </button>
   </div>
 }
