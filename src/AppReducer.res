@@ -56,8 +56,8 @@ let isWin = (tubes) => {
     | 0 => true
     | 4 => {
         let firstBall = balls[0]->Option.getExn
-        let onlyFirst = Js.Array2.filter(balls, v => v == firstBall)
-        Array.length(onlyFirst) == 4
+        let onlyFirst = Js.Array2.filter(balls, v => v === firstBall)
+        Array.length(onlyFirst) === 4
       }
     | _ => false
     }
@@ -87,11 +87,11 @@ let processClick = (state, ~source, ~target) => {
 
 let isEmpty = (tubes, index) => {
   let tube = tubes->Array.get(index)->Option.getExn
-  Array.length(tube) == 0
+  Array.length(tube) === 0
 }
 
 let isSame = (source, target) => {
-  source == target
+  source === target
 }
 
 let isRestrictedMove = (tubes, source, target) => {
@@ -99,7 +99,7 @@ let isRestrictedMove = (tubes, source, target) => {
   let targetBall = tubes[target]->Option.getExn->Array.get(0)
 
   switch (sourceBall, targetBall) {
-  | (Some(b1), Some(b2)) if b1 != b2 => true
+  | (Some(b1), Some(b2)) if b1 !== b2 => true
   | (None, _) => true
   | _ if source === target => true
   | _ => false
